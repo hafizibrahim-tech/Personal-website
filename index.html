@@ -8,50 +8,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- ANIMASI SLIDE GESER KE SAMPING YANG SIMPEL & STABIL --- */
-        body {
-            overflow-x: hidden;
-            background-color: #0b071e; /* Warna dasar ungu gelap gulita sesuai gambar */
-        }
-        
-        .slider-wrapper {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .main-slider-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            z-index: 2; /* Memastikan seluruh halaman berada di atas kanvas background */
-        }
-        
-        /* Mengunci posisi halaman agar tidak merusak layout grid asli */
-        .hero, #about, #contact {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.5s ease-in-out;
-            box-sizing: border-box;
-            overflow-y: auto;
-            background: transparent; /* Diubah ke transparan agar pola di belakang terlihat */
-        }
-
-        /* Posisi awal berjejer rapi di samping kanan layar luar */
-        .hero { transform: translateX(0%); }
-        #about { transform: translateX(100%); }
-        #contact { transform: translateX(200%); }
-
         /* --- RESET & VARIABLES --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            background-color: #0b071e; /* Warna dasar ungu gelap gulita sesuai gambar */
+            color: var(--text-dark);
         }
 
         :root {
@@ -66,19 +34,52 @@
                           linear-gradient(135deg, #070414 0%, #0d0926 100%);
         }
 
-        body {
-            color: var(--text-dark);
+        .slider-wrapper {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-slider-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* --- SISTEM TUMPANG AMAN: MENGHINDARI BUG HALAMAN HILANG --- */
+        .hero, #about, #contact {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background: transparent;
+            
+            /* Menggunakan transisi fade halus agar halaman tidak hilang di browser */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
         }
 
-        /* --- FIX BACKGROUND KANVAS DIGITAL PLEXUS (Z-INDEX DIKUNCI DI BELAKANG) --- */
+        /* Menampilkan halaman yang sedang dipilih */
+        .hero.active-section, #about.active-section, #contact.active-section {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- BACKGROUND KANVAS DIGITAL PLEXUS (DIPAKSA DI PALING BELAKANG) --- */
         .cyber-bg-canvas {
-            position: fixed; /* Diubah ke fixed agar polanya tetap diam di latar paling belakang */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1; /* Mengunci kanvas agar berada di belakang seluruh elemen website */
+            z-index: -1; /* Berada di bawah text dan foto */
             opacity: 0.6;
             background: var(--bg-texture);
         }
@@ -167,7 +168,6 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            position: relative;
             display: flex;
             align-items: center;
             padding: 120px 10% 60px 10%;
@@ -229,7 +229,7 @@
         .purple-bg-shape {
             width: 380px;
             height: 380px;
-            background: linear-gradient(135deg, #b624ff, #8e00e6); /* Warna bingkai asli foto dipertahankan */
+            background: linear-gradient(135deg, #b624ff, #8e00e6);
             border-radius: 40px;
             position: relative;
             display: flex;
@@ -255,19 +255,11 @@
             object-fit: cover;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
+            z-index: 3; /* Foto dipaksa berada di atas pola background */
         }
 
         /* Style sub-menu */
-        #about {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 120px 10% 60px 10%;
-        }
-
-        #contact {
-            position: relative;
+        #about, #contact {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -306,9 +298,9 @@
         <a href="#" class="logo">Personal Website</a>
         <nav>
             <ul>
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" class="active" data-target="home">Home</a></li>
+                <li><a href="#about" data-target="about">About Me</a></li>
+                <li><a href="#contact" data-target="contact">Contact</a></li>
             </ul>
         </nav>
         <a href="https://wa.me/628815081653" target="_blank" class="btn-connect">CONNECT</a>
@@ -319,7 +311,7 @@
 
         <div class="main-slider-container">
             
-            <section id="home" class="hero">
+            <section id="home" class="hero active-section">
                 <div class="hero-container">
                     <div class="hero-text">
                         <h3>Hello 👋, Saya</h3>
@@ -433,19 +425,24 @@
         }
         drawPlexus();
 
-        // --- 2. SCRIPT ASLI SLIDER YANG STABIL ---
-        const sections = document.querySelectorAll('.hero, #about, #contact');
-        
-        document.querySelectorAll('nav ul li a').forEach((link, index) => {
+        // --- 2. LOGIK NAVIGASI BARU: AMAN & BEBAS BUG HALAMAN HILANG ---
+        document.querySelectorAll('nav ul li a').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.preventDefault(); 
+                e.preventDefault();
                 
+                // Ganti class active di navbar
                 document.querySelectorAll('nav ul li a').forEach(el => el.classList.remove('active'));
                 this.classList.add('active');
                 
-                sections.forEach((section, secIndex) => {
-                    section.style.transform = `translateX(${(secIndex - index) * 100}%)`;
+                // Ambil id target tujuan menu
+                const targetId = this.getAttribute('data-target');
+                
+                // Sembunyikan semua halaman terlebih dahulu, lalu aktifkan halaman tujuan
+                document.querySelectorAll('.hero, #about, #contact').forEach(section => {
+                    section.classList.remove('active-section');
                 });
+                
+                document.getElementById(targetId).classList.add('active-section');
             });
         });
     </script>
