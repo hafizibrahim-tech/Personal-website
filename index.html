@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M Hafizh Ibrahim</title>
-    <!-- Menggunakan Font Poppins agar tampilan teks modern dan bersih -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome untuk Icon Media Sosial -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -259,7 +257,7 @@
             border-bottom-right-radius: 40px;
         }
 
-        /* Style sub-menu disesuaikan dengan tema gelap digital */
+        /* Style sub-menu menggunakan tema tekstur mesh digital */
         #about {
             background: var(--bg-texture);
             position: relative;
@@ -267,12 +265,6 @@
             align-items: center;
             justify-content: center;
             padding: 120px 10% 60px 10%;
-        }
-
-        #about > div, #contact > div {
-            position: relative;
-            z-index: 2;
-            width: 100%;
         }
 
         #contact {
@@ -312,8 +304,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR / HEADER -->
-    <header>
+    <header style="position: absolute; width: 100%; z-index: 100;">
         <a href="#" class="logo">Personal Website</a>
         <nav>
             <ul>
@@ -325,14 +316,11 @@
         <a href="https://wa.me/628815081653" target="_blank" class="btn-connect">CONNECT</a>
     </header>
 
-    <!-- WRAPPER UTAMA SLIDER -->
     <div class="slider-wrapper">
-        <!-- KANVAS ANIMASI EFEK NODE NETWORK PLEXUS BERDASARKAN GAMBAR CONTOH -->
         <canvas id="plexusCanvas" class="cyber-bg-canvas"></canvas>
 
         <div class="main-slider-container">
             
-            <!-- ====== SECTION 1: HOME ====== -->
             <section id="home" class="hero">
                 <div class="hero-container">
                     <div class="hero-text">
@@ -353,9 +341,8 @@
                 </div>
             </section>
 
-            <!-- ====== SECTION 2: ABOUT ====== -->
             <section id="about">
-                <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center;">
+                <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center; position: relative; z-index: 5;">
                     <h2 style="font-size: 36px; font-weight: 700; color: var(--text-dark); margin-bottom: 20px;">About Me</h2>
                     
                     <p style="font-size: 16px; line-height: 1.8; color: var(--text-muted); margin-bottom: 15px;">
@@ -368,24 +355,20 @@
                 </div>
             </section>
 
-            <!-- ====== SECTION 3: CONTACT ====== -->
             <section id="contact">
-                <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center;">
+                <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center; position: relative; z-index: 5;">
                     <h2 style="font-size: 36px; font-weight: 700; color: var(--text-dark); margin-bottom: 10px;">Contact</h2>
                     <p style="font-size: 16px; color: var(--text-muted); margin-bottom: 40px;">Hubungi Saya</p>
                     
                     <div style="display: flex; justify-content: center; gap: 35px; align-items: center;">
-                        <!-- WhatsApp -->
                         <a href="https://wa.me/628815081653" target="_blank" title="WhatsApp" style="color: var(--text-dark); font-size: 32px; transition: color 0.3s ease; text-decoration: none;">
                             <i class="fa-brands fa-whatsapp" onmouseover="this.style.color='#00f0ff'" onmouseout="this.style.color='var(--text-dark)'"></i>
                         </a>
                         
-                        <!-- Instagram -->
                         <a href="https://www.instagram.com/hpissnc_/" target="_blank" title="Instagram" style="color: var(--text-dark); font-size: 30px; transition: color 0.3s ease; text-decoration: none;">
                             <i class="fa-brands fa-instagram" onmouseover="this.style.color='#00f0ff'" onmouseout="this.style.color='var(--text-dark)'"></i>
                         </a>
                         
-                        <!-- TikTok -->
                         <a href="https://www.tiktok.com/@hpissnwn" target="_blank" title="TikTok" style="color: var(--text-dark); font-size: 28px; transition: color 0.3s ease; text-decoration: none;">
                             <i class="fa-brands fa-tiktok" onmouseover="this.style.color='#00f0ff'" onmouseout="this.style.color='var(--text-dark)'"></i>
                         </a>
@@ -396,7 +379,6 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT UNTUK BACKGROUND CANVAS PLEXUS & GESER HALAMAN -->
     <script>
         // --- 1. SCRIPT ANIMASI POLA SIMPUL DIGITAL PLEXUS ---
         const canvas = document.getElementById('plexusCanvas');
@@ -410,7 +392,7 @@
         resizeCanvas();
 
         const dots = [];
-        const numDots = 55; // Kepadatan titik simpul pola jaringan
+        const numDots = 55;
 
         for (let i = 0; i < numDots; i++) {
             dots.push({
@@ -426,7 +408,6 @@
             ctx.fillStyle = 'rgba(0, 240, 255, 0.3)';
             ctx.strokeStyle = 'rgba(182, 36, 255, 0.08)';
 
-            // Update dan gambar titik simpul
             dots.forEach(dot => {
                 dot.x += dot.vx;
                 dot.y += dot.vy;
@@ -439,7 +420,6 @@
                 ctx.fill();
             });
 
-            // Hubungkan titik menggunakan garis plexus tipis estetik
             for (let i = 0; i < numDots; i++) {
                 for (let j = i + 1; j < numDots; j++) {
                     const dist = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
