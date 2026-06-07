@@ -11,6 +11,8 @@
         /* --- ANIMASI SLIDE GESER KE SAMPING YANG SIMPEL & STABIL --- */
         body {
             overflow-x: hidden;
+            background-color: #ffffff;
+            color: #1a1a1a;
         }
         
         .slider-wrapper {
@@ -36,6 +38,9 @@
             transition: transform 0.5s ease-in-out;
             box-sizing: border-box;
             overflow-y: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* Posisi awal berjejer rapi di samping kanan layar luar */
@@ -55,18 +60,13 @@
             --primary-purple: #b624ff;
             --primary-gradient: linear-gradient(135deg, #b624ff, #8e00e6);
             --text-dark: #1a1a1a;
-            --text-muted: #555555; /* Dibuat sedikit lebih gelap agar lebih kontras */
+            --text-muted: #555555;
             
             /* --- BACKGROUND: EFEK MESH & GRID ABSTRACT DIGITAL --- */
             --bg-texture: radial-gradient(circle at 80% 20%, rgba(182, 36, 255, 0.06) 0%, transparent 40%),
                           radial-gradient(circle at 15% 80%, rgba(142, 0, 230, 0.05) 0%, transparent 40%),
                           linear-gradient(135deg, #fcfbfa 0%, #f5f5f8 100%);
             --grid-pattern: radial-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px);
-        }
-
-        body {
-            background-color: #ffffff;
-            color: var(--text-dark);
         }
 
         /* --- NAVBAR --- */
@@ -154,10 +154,7 @@
         /* --- HERO SECTION --- */
         .hero {
             background: var(--bg-texture);
-            background-size: cover, cover, cover;
-            position: relative;
-            display: flex;
-            align-items: center;
+            background-size: cover;
             padding: 120px 10% 60px 10%;
         }
 
@@ -262,19 +259,20 @@
         /* Style sub-menu menggunakan tema tekstur mesh digital */
         #about {
             background: var(--bg-texture);
-            position: relative;
-            padding: 140px 10% 60px 10%;
+            background-size: cover;
+            padding: 100px 10% 60px 10%;
         }
 
         #about > div, #contact > div {
             position: relative;
             z-index: 2;
+            width: 100%;
         }
 
         #contact {
             background: var(--bg-texture);
-            position: relative;
-            padding: 140px 10% 60px 10%;
+            background-size: cover;
+            padding: 100px 10% 60px 10%;
         }
 
         /* --- RESPONSIVE DESIGN (MOBILE OPTIMIZATION) --- */
@@ -341,7 +339,7 @@
             </section>
 
             <section id="about">
-                <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center;">
+                <div style="max-width: 800px; margin: 0 auto; text-align: center;">
                     <h2 style="font-size: 36px; font-weight: 700; color: #1a1a1a; margin-bottom: 20px;">About Me</h2>
                     
                     <p style="font-size: 16px; line-height: 1.8; color: #444444; margin-bottom: 15px;">
@@ -355,7 +353,7 @@
             </section>
 
             <section id="contact">
-                <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center;">
+                <div style="max-width: 800px; margin: 0 auto; text-align: center;">
                     <h2 style="font-size: 36px; font-weight: 700; color: #1a1a1a; margin-bottom: 10px;">Contact</h2>
                     <p style="font-size: 16px; color: #444444; margin-bottom: 40px;">Hubungi Saya</p>
                     
