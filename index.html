@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio M Hafizh Ibrahim</title>
+    <!-- Menggunakan Font Poppins agar tampilan teks modern dan bersih -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome untuk Icon Media Sosial -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- ANIMASI SLIDE GESER KE SAMPING YANG SIMPEL & STABIL --- */
+        body {
+            overflow-x: hidden;
+        }
+        
+        .slider-wrapper {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-slider-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Mengunci posisi halaman agar tidak merusak layout grid asli */
+        .hero, #about, #contact {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        /* Posisi awal berjejer rapi di samping kanan layar luar */
+        .hero { transform: translateX(0%); }
+        #about { transform: translateX(100%); }
+        #contact { transform: translateX(200%); }
+
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-purple: #b624ff;
+            --primary-gradient: linear-gradient(135deg, #b624ff, #8e00e6);
+            --text-dark: #1a1a1a;
+            --text-muted: #666666;
+            --bg-gradient: linear-gradient(135deg, #fff3fa 0%, #eef3ff 100%);
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        /* --- NAVBAR --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 10%;
+            background-color: transparent;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 40px;
+            height: 4px;
+            background-color: var(--primary-purple);
+            border-radius: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--text-dark);
+        }
+
+        /* Garis berwarna di bawah menu navigasi aktif */
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-purple);
+            border-radius: 2px;
+        }
+
+        .btn-connect {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(182, 36, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-connect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(182, 36, 255, 0.4);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: var(--bg-gradient);
+            display: flex;
+            align-items: center;
+            padding: 120px 10% 60px 10%;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text h3 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .hero-text h1 {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: var(--text-dark);
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-purple);
+        }
+
+        /* Hero Image Graphic */
+        .hero-image-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .purple-bg-shape {
+            width: 380px;
+            height: 380px;
+            background: var(--primary-gradient);
+            border-radius: 40px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        .purple-bg-shape::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            transform: scale(0.9) rotate(-5deg);
+        }
+
+        .hero-img {
+            height: 460px;
+            position: absolute;
+            bottom: 0;
+            object-fit: cover;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        /* Style dasar tambahan untuk background halaman kosong agar transisi terlihat jelas */
+        #about {
+            background-color: #ffffff;
+            padding: 120px 10% 60px 10%;
+        }
+
+        #contact {
+            background-color: #fafafa;
+            padding: 120px 10% 60px 10%;
+        }
+
+        /* --- RESPONSIVE DESIGN (MOBILE OPTIMIZATION) --- */
+        @media (max-width: 1024px) {
+            header { 
+                padding: 20px 5%; 
+                flex-direction: column;
+                gap: 15px;
+                position: relative;
+                background-color: #ffffff;
+            }
+            nav ul { 
+                gap: 15px; 
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav ul li a { font-size: 13px; }
+            .btn-connect { width: 100%; text-align: center; }
+            .hero, #about, #contact { padding: 40px 5%; height: auto; min-height: 100vh; }
+            .hero-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+            .hero-text h1 { font-size: 40px; }
+            .hero-text p { margin: 0 auto 25px auto; }
+            .social-icons { justify-content: center; }
+            .purple-bg-shape { width: 260px; height: 260px; }
+            .hero-img { height: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR / HEADER -->
+    <header>
+        <a href="#" class="logo">Personal Website</a>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="https://wa.me/628815081653" target="_blank" class="btn-connect">CONNECT</a>
+    </header>
+
+    <!-- WRAPPER UTAMA SLIDER -->
+    <div class="slider-wrapper">
+        <div class="main-slider-container">
+            
+            <!-- ====== SECTION 1: HOME ====== -->
+            <section id="home" class="hero">
+                <div class="hero-container">
+                    <div class="hero-text">
+                        <h3>Hello 👋, I am</h3>
+                        <h1>M Hafizh Ibrahim</h1>
+                        <p>Saya adalah seorang siswa di MTs Darul Huda Mayak.</p>
+                        <div class="social-icons">
+                            <a href="https://wa.me/628815081653" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="#" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    <div class="hero-image-wrapper">
+                        <div class="purple-bg-shape">
+                            <img src="https://lh3.googleusercontent.com/d/18TcSrXgBu0EzOzfaM8nnvafbOXtiS4ph" alt="M Hafizh Ibrahim" class="hero-img">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== SECTION 2: ABOUT ====== -->
+            <section id="about">
+                <!-- Masukkan kodingan isi file 'about.html' lama Anda di bawah ini -->
+                <div style="text-align: center; margin-top: 100px;">
+                    <h2>About Me</h2>
+                    <p style="color: var(--text-muted); margin-top: 15px;">Halaman profil tentang saya.</p>
+                </div>
+            </section>
+
+            <!-- ====== SECTION 3: CONTACT ====== -->
+            <section id="contact">
+                <!-- Masukkan kodingan isi file 'contact.html' lama Anda di bawah ini -->
+                <div style="text-align: center; margin-top: 100px;">
+                    <h2>Contact</h2>
+                    <p style="color: var(--text-muted); margin-top: 15px;">Hubungi saya melalui media sosial di atas atau tombol Connect.</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT UNTUK MENGGERAKKAN HALAMAN -->
+    <script>
+        const sections = document.querySelectorAll('.hero, #about, #contact');
+        
+        document.querySelectorAll('nav ul li a').forEach((link, index) => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                
+                document.querySelectorAll('nav ul li a').forEach(el => el.classList.remove('active'));
+                this.classList.add('active');
+                
+                sections.forEach((section, secIndex) => {
+                    section.style.transform = `translateX(${(secIndex - index) * 100}%)`;
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
